@@ -2,6 +2,7 @@
 import requests
 from bs4 import BeautifulSoup as soup
 import smtplib
+from time import sleep
 
 #url for the product that i'm going to be tracking the price of
 url = """https://www.amazon.com/BenQ-proprietary-borderless-Brightness-GW2480/dp/B072XCZSSW/ref=sr_1_8?dchild=1&keywords=monitor&qid=1596831655&s=electronics&sr=1-8&th=1"""
@@ -10,8 +11,8 @@ header = {
     }
 
 #gets and parses the contents of the page
-page = requests.get(url, headers=header)
-contents = soup(page.content, 'lxml') #parses the html of the page
+page = requests.get(url, headers=header) #gets the html of (var:url)
+contents = soup(page.content, 'lxml') #parses the html of (var:page)
 
 
 #function that sends the email
@@ -27,8 +28,8 @@ def send_email():
     #login to gmail
     server.login(email, "YOUR PASSWORD")
 
-    #email
-    subject = 'SUBJECT'
+    #defines email
+    subject = 'Price change!'
     body = f"Link to product: {url}"
 
     #sends email
@@ -45,5 +46,3 @@ def price_checker():
     if (int_price < 100):
         send_email()
         print('Email has been sent!')
-
-print(price_checker())  #runs the function
