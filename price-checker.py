@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup as soup
 import smtplib
 
-#url for the product that I want to track the price for and my user agent string
+#url for the product that i'm going to be tracking the price of
 url = """https://www.amazon.com/BenQ-proprietary-borderless-Brightness-GW2480/dp/B072XCZSSW/ref=sr_1_8?dchild=1&keywords=monitor&qid=1596831655&s=electronics&sr=1-8&th=1"""
 header = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36"
@@ -14,7 +14,7 @@ page = requests.get(url, headers=header)
 contents = soup(page.content, 'lxml') #parses the html of the page
 
 
-#function that sends the mail
+#function that sends the email
 def send_email():
     email = "YOUR EMAIL"
 
@@ -41,12 +41,9 @@ def price_checker():
     price = contents.find(id="priceblock_ourprice").get_text() #gets price as a string object
     int_price = int(price[1:4])  #converts price into a integer
     
-    #checks if (int_price) meets the threshold. if yes send an email
+    #checks if (int_price) meets the threshold. sends an email if it does
     if (int_price < 100):
         send_email()
         print('Email has been sent!')
 
-print(price_checker()) #runs the function
-
-
-    
+print(price_checker())  #runs the function
