@@ -1,2 +1,2 @@
-# price-checker
-checks amazon.com if the price of a product meets a certain threshold and emails you if it does!
+## Description
+Tracks the price of a product on amazon and sends you an email if the price of the product is below a certain threshold. 
